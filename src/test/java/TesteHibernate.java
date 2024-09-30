@@ -50,7 +50,6 @@ public class TesteHibernate {
     public void testeExcluir(){
         DaoGeneric<UsuarioPessoa> dao = new DaoGeneric<UsuarioPessoa>();
         UsuarioPessoa pessoa = dao.listar(UsuarioPessoa.class, 2L);
-
         dao.excluir(pessoa);
     }
     @Test
@@ -76,6 +75,21 @@ public class TesteHibernate {
         List<UsuarioPessoa> list = dao.getEntityManager().createQuery(" from UsuarioPessoa order by id").setMaxResults(5).getResultList();
 
         System.out.println(list + "\n");
+    }
+
+    @Test
+    public void testeQueryListParameter(){
+        DaoGeneric<UsuarioPessoa> daoGeneric = new DaoGeneric<UsuarioPessoa>();
+
+        List<UsuarioPessoa> list = daoGeneric.getEntityManager().createQuery("from UsuarioPessoa where nome = :nome or email = :email")
+                                   .setParameter("nome", "Victor")
+                                   .setParameter("email", "joao@gmail.com")
+                                   .getResultList();
+
+        for(UsuarioPessoa pessoa : list){
+            System.out.println(pessoa);
+        }
+
     }
 
 }

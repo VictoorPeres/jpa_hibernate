@@ -1,6 +1,7 @@
 package br.com.avancard.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @NamedQueries({
@@ -19,6 +20,9 @@ public class UsuarioPessoa {
     private String email;
     private String login;
     private String senha;
+
+    @OneToMany( mappedBy = "pessoa")
+    private List<TelefonePessoa> telefones;
 
     public long getId() {
         return id;
@@ -74,6 +78,14 @@ public class UsuarioPessoa {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public List<TelefonePessoa> getTelefones() {
+        return telefones;
+    }
+
+    public void setTelefones(List<TelefonePessoa> telefones) {
+        this.telefones = telefones;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package br.com.avancard.dao;
 
 import br.com.avancard.jpa_hibernate.HibernateUtil;
+import br.com.avancard.model.TelefonePessoa;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -10,6 +11,13 @@ public class DaoGeneric<E> {
     private EntityManager entityManager = new HibernateUtil().getEntityManager();
 
     public void salvar(E entidade) {
+        EntityTransaction transiction = entityManager.getTransaction();
+        transiction.begin();
+        entityManager.persist(entidade);
+        transiction.commit();
+    }
+
+    public void salvarTel(E entidade) {
         EntityTransaction transiction = entityManager.getTransaction();
         transiction.begin();
         entityManager.persist(entidade);

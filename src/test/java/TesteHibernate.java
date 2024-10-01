@@ -1,5 +1,6 @@
 import br.com.avancard.dao.DaoGeneric;
 import br.com.avancard.jpa_hibernate.HibernateUtil;
+import br.com.avancard.model.TelefonePessoa;
 import br.com.avancard.model.UsuarioPessoa;
 import org.junit.jupiter.api.Test;
 
@@ -58,7 +59,7 @@ public class TesteHibernate {
         List<UsuarioPessoa> list =  dao.listarAll(UsuarioPessoa.class);
 
         for(UsuarioPessoa pessoa : list){
-            System.out.println(pessoa.getNome() + " " + pessoa.getSobrenome());
+            System.out.println(pessoa.toString());
         }
     }
     @Test
@@ -110,6 +111,29 @@ public class TesteHibernate {
 
         for(UsuarioPessoa pessoa : list){
             System.out.println(pessoa);
+        }
+    }
+    @Test
+    public void testeGravaTelefone(){
+        DaoGeneric daoGeneric = new DaoGeneric();
+        UsuarioPessoa pessoa = (UsuarioPessoa) daoGeneric.listar(UsuarioPessoa.class, 1L);
+        TelefonePessoa telefone = new TelefonePessoa();
+        telefone.setNumero("546456654");
+        telefone.setTipo("Celular");
+        telefone.setPessoa(pessoa);
+        daoGeneric.salvarTel(telefone);
+    }
+
+    @Test
+    public void testeConsultaTelefones(){
+        DaoGeneric daoGeneric = new DaoGeneric();
+        UsuarioPessoa pessoa = (UsuarioPessoa) daoGeneric.listar(UsuarioPessoa.class, 1L);
+
+        for (TelefonePessoa telefone : pessoa.getTelefones()) {
+            System.out.println(telefone.getNumero());
+            System.out.println(telefone.getTipo());
+            System.out.println(telefone.getPessoa().getNome());
+            System.out.println("---------------------------------------");
         }
     }
 

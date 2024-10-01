@@ -3,6 +3,10 @@ package br.com.avancard.model;
 import javax.persistence.*;
 
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "UsuarioPessoa.todos", query = "select u from UsuarioPessoa u"), /* Criando um select nomeado com NamedQuery */
+        @NamedQuery(name = "UsuarioPessoa.buscaPorNome", query = "select u from UsuarioPessoa u where u.nome = :nome") /* Criando um select nomeado com NamedQuery */
+})
 public class UsuarioPessoa {
     @Id /* Esta anotação indica que o campo anotado é a chave primária da entidade. A chave primária é um identificador único para cada registro na tabela do banco de dados. */
     @GeneratedValue(strategy = GenerationType.AUTO) /* Esta anotação especifica como o valor da chave primária será gerado. O strategy define a estratégia de geração de IDs. Aqui, GenerationType.AUTO indica que o provedor de persistência deve escolher a estratégia apropriada para gerar os valores da chave primária. Dependendo do banco de dados utilizado, isso pode significar o uso de uma sequência, um gerador de identidade ou outra abordagem. */

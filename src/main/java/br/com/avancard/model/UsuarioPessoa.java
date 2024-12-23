@@ -19,7 +19,7 @@ public class UsuarioPessoa {
     private int idade;
     private String email;
     private String login;
-    private String senha;
+    private String password;
 
     @OneToMany( mappedBy = "pessoa")
     private List<TelefonePessoa> telefones;
@@ -72,12 +72,12 @@ public class UsuarioPessoa {
         this.login = login;
     }
 
-    public String getSenha() {
-        return senha;
+    public String getPassword() {
+        return password;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public List<TelefonePessoa> getTelefones() {
@@ -97,7 +97,7 @@ public class UsuarioPessoa {
                 ", idade=" + idade +
                 ", email='" + email + '\'' +
                 ", login='" + login + '\'' +
-                ", senha='" + senha + '\'' +
+                ", senha='" + password + '\'' +
                 '}';
     }
 }

@@ -20,8 +20,9 @@ public class UsuarioPessoa {
     private String email;
     private String login;
     private String password;
+    private String sexo;
 
-    @OneToMany( mappedBy = "pessoa")
+    @OneToMany(mappedBy = "pessoa", cascade = CascadeType.REMOVE)
     private List<TelefonePessoa> telefones;
 
     public long getId() {
@@ -86,6 +87,14 @@ public class UsuarioPessoa {
 
     public void setTelefones(List<TelefonePessoa> telefones) {
         this.telefones = telefones;
+    }
+
+    public String getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
     }
 
     @Override

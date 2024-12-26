@@ -17,10 +17,12 @@ public class UsuarioPessoaManagedBean {
     private UsuarioPessoa usuarioPessoa = new UsuarioPessoa();
     private DaoGeneric<UsuarioPessoa> dao = new DaoGeneric<>();
     private List<UsuarioPessoa> usuarios;
+    private boolean modoEdicao;
 
    @PostConstruct
     public void init(){
         usuarios = new ArrayList<UsuarioPessoa>();
+        carregarPessoas();
     }
 
     public String salvar(){
@@ -44,11 +46,22 @@ public class UsuarioPessoaManagedBean {
                 return "";
 
             }else{
-                dao.salvar(usuarioPessoa);
-                novo();
-                FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Usuario cadastrado com sucesso.");
-                FacesContext.getCurrentInstance().addMessage(null, facesMessage);
-                return "";
+                if(modoEdicao){
+                    dao.atualizar(usuarioPessoa);
+                    novo();
+                    carregarPessoas();
+                    FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Usuario atualizado com sucesso.");
+                    FacesContext.getCurrentInstance().addMessage(null, facesMessage);
+                    return "";
+                }else{
+                    dao.salvar(usuarioPessoa);
+                    novo();
+                    carregarPessoas();
+                    FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Usuario cadastrado com sucesso.");
+                    FacesContext.getCurrentInstance().addMessage(null, facesMessage);
+                    return "";
+                }
+
             }
         }catch (Exception e){
             FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "", "Erro ao cadastrar usuario: "+e.getMessage());
@@ -58,9 +71,44 @@ public class UsuarioPessoaManagedBean {
         return "";
     }
 
+    public String excluir(UsuarioPessoa usuario){
+       try{
+           dao.excluir(usuario);
+           carregarPessoas();
+           FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Usuario deletado com sucesso.");
+           FacesContext.getCurrentInstance().addMessage(null, facesMessage);
+           return "";
+       }catch (Exception e){
+           if(e.getCause() instanceof org.hibernate.exception.ConstraintViolationException){
+               FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "", "Erro ao deletar usuario: "+e.getMessage());
+               FacesContext.getCurrentInstance().addMessage(null, facesMessage);
+           }
+           return "";
+       }
+    }
+
+    public String edit(UsuarioPessoa usuario){
+       try{
+           usuarioPessoa = usuario;
+           setModoEdicao(true);
+           FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_WARN, "", "Modo de edição do usuário " + usuarioPessoa.getNome() + ". ");            FacesContext.getCurrentInstance().addMessage("msg", facesMessage);
+           return "";
+       } catch (Exception e) {
+           FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "", "Erro ao editar o registro: "+e.getMessage());
+           FacesContext.getCurrentInstance().addMessage(null, facesMessage);
+           return "";
+       }
+    }
+
     public void novo(){
+        this.modoEdicao = false;
         usuarioPessoa = new UsuarioPessoa();
     }
+
+    public void carregarPessoas(){
+        usuarios = dao.listarAll(UsuarioPessoa.class);
+    }
+
 
     public UsuarioPessoa getUsuarioPessoa() {
         return usuarioPessoa;
@@ -69,10 +117,15 @@ public class UsuarioPessoaManagedBean {
         this.usuarioPessoa = usuarioPessoa;
     }
     public List<UsuarioPessoa> getUsuarios() {
-        usuarios = dao.listarAll(UsuarioPessoa.class);
         return usuarios;
     }
     public void setUsuarios(List<UsuarioPessoa> usuarios) {
         this.usuarios = usuarios;
+    }
+    public boolean getModoEdicao() {
+        return modoEdicao;
+    }
+    public void setModoEdicao(boolean modoEdicao) {
+        this.modoEdicao = modoEdicao;
     }
 }

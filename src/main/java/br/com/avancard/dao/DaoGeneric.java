@@ -52,8 +52,16 @@ public class DaoGeneric<E> {
     public void excluir(E entidade){
         EntityTransaction transiction = entityManager.getTransaction();
         transiction.begin();
-        entityManager.remove(entidade);
-        transiction.commit();
+        try {
+            if(!entityManager.contains(entidade)){
+                entidade = entityManager.merge(entidade);
+            }
+            entityManager.remove(entidade);
+            transiction.commit();
+        }catch (Exception e){
+            transiction.rollback();
+        }
+
     }
 
     public EntityManager getEntityManager() {

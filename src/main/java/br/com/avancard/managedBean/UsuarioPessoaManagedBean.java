@@ -1,6 +1,7 @@
 package br.com.avancard.managedBean;
 
 import br.com.avancard.dao.DaoGeneric;
+import br.com.avancard.jpa_hibernate.SessionUtil;
 import br.com.avancard.model.UsuarioPessoa;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -103,6 +104,12 @@ public class UsuarioPessoaManagedBean {
     public void novo(){
         this.modoEdicao = false;
         usuarioPessoa = new UsuarioPessoa();
+    }
+
+    public String cadastrarTelefone(UsuarioPessoa usuarioP){
+        SessionUtil.setParam("usuario", usuarioP);
+        System.out.println(usuarioP.getId());
+                return "novo";
     }
 
     public void carregarPessoas(){

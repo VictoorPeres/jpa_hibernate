@@ -5,6 +5,7 @@ import br.com.avancard.model.TelefonePessoa;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
 import java.util.List;
 
 public class DaoGeneric<E> {
@@ -40,6 +41,14 @@ public class DaoGeneric<E> {
         transiction.commit();
         return lista;
     }
+
+    public List<TelefonePessoa> listarPorId(long id){
+        String jpql = "select t from TelefonePessoa t where t.pessoa.id = :id";
+        Query query = entityManager.createQuery(jpql);
+        query.setParameter("id", id);
+        return (List<TelefonePessoa>) query.getResultList();
+    }
+
 
     public E atualizar(E entidade){
         EntityTransaction transiction = entityManager.getTransaction();

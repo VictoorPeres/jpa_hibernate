@@ -71,7 +71,12 @@
           <artifactId>javax.annotation-api</artifactId>
           <version>1.3.2</version>
       </dependency>
-
+      <dependency>
+          <groupId>javax.servlet</groupId>
+          <artifactId>javax.servlet-api</artifactId>
+          <version>4.0.1</version> <!-- Certifique-se de usar a versão correspondente ao seu servidor -->
+          <scope>provided</scope> <!-- Escopo "provided" indica que o contêiner fornece esta API -->
+      </dependency>
       <dependency>
           <groupId>org.jboss.weld.se</groupId>
           <artifactId>weld-se-core</artifactId>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+
+</h:head>
+
+<ui:include src="/WEB-INF/menu.xhtml" />
+
+<h:body>
+    <h:form>
+        <p:growl id="growl" showDetail="true" />
+        <h:panelGrid columns="2">
+            <p:outputLabel value="Id"/>
+            <p:inputText readonly="true" value="#{usuarioPessoaManagedBean.usuarioPessoa.id}"/>
+
+            <p:outputLabel value="Nome"/>
+            <p:inputText value="#{usuarioPessoaManagedBean.usuarioPessoa.nome}"/>
+
+            <p:outputLabel value="Sobrenome"/>
+            <p:inputText value="#{usuarioPessoaManagedBean.usuarioPessoa.sobrenome}"/>
+
+            <p:outputLabel value="Email"/>
+            <p:inputText value="#{usuarioPessoaManagedBean.usuarioPessoa.email}"/>
+
+            <p:outputLabel value="Idade"/>
+            <p:inputText value="#{usuarioPessoaManagedBean.usuarioPessoa.idade}"/>
+
+            <p:outputLabel value="Login"/>
+            <p:inputText value="#{usuarioPessoaManagedBean.usuarioPessoa.login}"/>
+
+            <p:outputLabel value="Senha"/>
+            <p:password value="#{usuarioPessoaManagedBean.usuarioPessoa.password}" feedback="true"/>
+
+            <p:outputLabel for="@next" value="Sexo"/>
+            <p:selectOneMenu id="option" value="#{usuarioPessoaManagedBean.usuarioPessoa.sexo}">
+                <f:selectItem itemLabel="Selecionar..." itemValue=""/>
+                <f:selectItem itemLabel="Masculino" itemValue="M"/>
+                <f:selectItem itemLabel="Feminino" itemValue="F"/>
+            </p:selectOneMenu>
+        </h:panelGrid>
+                <p:commandButton value="#{!usuarioPessoaManagedBean.modoEdicao?'Salvar':'Atualizar'}" action="#{usuarioPessoaManagedBean.salvar}" update="growl" ajax="false" styleClass="ui-button-success"/>
+                <p:commandButton value="Novo" action="#{usuarioPessoaManagedBean.novo}" ajax="false" styleClass="ui-button-secondary"/>
+        <br/>
+
+        <p:dataTable id="listaUsuarios" var="usuario" value="#{usuarioPessoaManagedBean.usuarios}">
+            <p:column headerText="ID">
+                    <h:outputText value="#{usuario.id}"/>
+            </p:column>
+            <p:column headerText="NOME">
+                <h:outputText value="#{usuario.nome}"/>
+            </p:column>
+            <p:column headerText="SOBRENOME">
+                <h:outputText value="#{usuario.sobrenome}"/>
+            </p:column>
+            <p:column headerText="EMAIL">
+                <h:outputText value="#{usuario.email}"/>
+            </p:column>
+            <p:column headerText="IDADE">
+                <h:outputText value="#{usuario.idade}"/>
+            </p:column>
+            <p:column headerText="AÇÃO">
+                <p:commandButton styleClass="ui-button-warning" icon="pi pi-user-edit" title="Editar" action="#{usuarioPessoaManagedBean.edit(usuario)}" ajax="false"/>
+                <p:commandButton styleClass="ui-button-danger" icon="pi pi-user-minus" title="Excluir" action="#{usuarioPessoaManagedBean.excluir(usuario)}" ajax="false"/>
+                <p:commandButton styleClass="ui-button-secondary" icon="pi pi-phone" title="Cadastrar Telefone" action="#{usuarioPessoaManagedBean.cadastrarTelefone(usuario)}" ajax="false"/>
+            </p:column>
+        </p:dataTable>
+
+
+    </h:form>
+</h:body>
+</html>

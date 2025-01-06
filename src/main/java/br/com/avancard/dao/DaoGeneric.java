@@ -14,8 +14,12 @@ public class DaoGeneric<E> {
     public void salvar(E entidade) {
         EntityTransaction transiction = entityManager.getTransaction();
         transiction.begin();
-        entityManager.persist(entidade);
-        transiction.commit();
+        try{
+            entityManager.persist(entidade);
+            transiction.commit();
+        }catch(Exception e){
+            transiction.rollback();
+        }
     }
 
     public void salvarTel(E entidade) {
@@ -53,8 +57,12 @@ public class DaoGeneric<E> {
     public E atualizar(E entidade){
         EntityTransaction transiction = entityManager.getTransaction();
         transiction.begin();
-        entityManager.merge(entidade);
-        transiction.commit();
+        try{
+            entityManager.merge(entidade);
+            transiction.commit();
+        }catch(Exception e){
+            transiction.rollback();
+        }
         return entidade;
     }
 

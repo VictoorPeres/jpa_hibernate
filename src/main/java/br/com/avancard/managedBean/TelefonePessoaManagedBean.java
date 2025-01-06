@@ -21,11 +21,9 @@ public class TelefonePessoaManagedBean {
     private DaoGeneric<TelefonePessoa> dao = new DaoGeneric<>();
     private boolean modoEdicao;
     private UsuarioPessoa usuarioPessoa;
-    private List<TelefonePessoa> telefones;
 
    @PostConstruct
     public void init(){
-       telefones = new ArrayList<>();
     if(SessionUtil.getParam("usuario") != null){
         usuarioPessoa = (UsuarioPessoa) SessionUtil.getParam("usuario");
         carregaTelefonePessoa();
@@ -71,7 +69,7 @@ public class TelefonePessoaManagedBean {
         try{
             telefonePessoa = telefone;
             setModoEdicao(true);
-            FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_WARN, "", "Modo de edição do telefone do usuário" + telefonePessoa.getPessoa().getNome() + ". ");            FacesContext.getCurrentInstance().addMessage("msg", facesMessage);
+            FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_WARN, "", "Modo de edição do telefone: " + telefonePessoa.getNumero() + ". ");            FacesContext.getCurrentInstance().addMessage("msg", facesMessage);
             return "";
         } catch (Exception e) {
             FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "", "Erro ao editar o registro: "+e.getMessage());
@@ -86,7 +84,7 @@ public class TelefonePessoaManagedBean {
     }
 
     public String carregaTelefonePessoa(){
-        telefones = dao.listarPorId(usuarioPessoa.getId());
+        usuarioPessoa.setTelefones(dao.listarPorId(usuarioPessoa.getId()));
         return "";
     }
 
@@ -106,14 +104,6 @@ public class TelefonePessoaManagedBean {
 
     public void setUsuarioPessoa(UsuarioPessoa usuarioPessoa) {
         this.usuarioPessoa = usuarioPessoa;
-    }
-
-    public List<TelefonePessoa> getTelefones() {
-        return telefones;
-    }
-
-    public void setTelefones(List<TelefonePessoa> telefones) {
-        this.telefones = telefones;
     }
 
     public boolean getModoEdicao() {

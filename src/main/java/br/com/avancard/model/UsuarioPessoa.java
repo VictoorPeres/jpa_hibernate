@@ -21,9 +21,22 @@ public class UsuarioPessoa {
     private String login;
     private String password;
     private String sexo;
+    private Double salario;
 
-    @OneToMany(mappedBy = "pessoa", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "pessoa", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<TelefonePessoa> telefones;
+
+    private String cep;
+    private String logradouro;
+    private String complemento;
+    private String bairro;
+    @Column(name = "cidade")
+    private String localidade;
+    private String estado;
+    private String ibge;
+
+
+
 
     public long getId() {
         return id;
@@ -97,6 +110,70 @@ public class UsuarioPessoa {
         this.sexo = sexo;
     }
 
+    public Double getSalario() {
+        return salario;
+    }
+
+    public void setSalario(Double salario) {
+        this.salario = salario;
+    }
+
+    public String getCep() {
+        return cep;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
+    }
+
+    public String getLogradouro() {
+        return logradouro;
+    }
+
+    public void setLogradouro(String logradouro) {
+        this.logradouro = logradouro;
+    }
+
+    public String getComplemento() {
+        return complemento;
+    }
+
+    public void setComplemento(String complemento) {
+        this.complemento = complemento;
+    }
+
+    public String getBairro() {
+        return bairro;
+    }
+
+    public void setBairro(String bairro) {
+        this.bairro = bairro;
+    }
+
+    public String getLocalidade() {
+        return localidade;
+    }
+
+    public void setLocalidade(String localidade) {
+        this.localidade = localidade;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public String getIbge() {
+        return ibge;
+    }
+
+    public void setIbge(String ibge) {
+        this.ibge = ibge;
+    }
+
     @Override
     public String toString() {
         return "UsuarioPessoa{" +
@@ -106,7 +183,16 @@ public class UsuarioPessoa {
                 ", idade=" + idade +
                 ", email='" + email + '\'' +
                 ", login='" + login + '\'' +
-                ", senha='" + password + '\'' +
+                ", password='" + password + '\'' +
+                ", sexo='" + sexo + '\'' +
+                ", telefones=" + telefones +
+                ", cep='" + cep + '\'' +
+                ", logradouro='" + logradouro + '\'' +
+                ", complemento='" + complemento + '\'' +
+                ", bairro='" + bairro + '\'' +
+                ", localidade='" + localidade + '\'' +
+                ", estado='" + estado + '\'' +
+                ", ibge='" + ibge + '\'' +
                 '}';
     }
 }

@@ -35,7 +35,7 @@
                 <p:commandButton value="Novo" action="#{telefonePessoaManagedBean.novo}" ajax="false" styleClass="ui-button-secondary"/>
         <br/>
 
-        <p:dataTable id="listaTelefones" var="telefone" value="#{telefonePessoaManagedBean.telefones}">
+        <p:dataTable id="listaTelefones" var="telefone" value="#{telefonePessoaManagedBean.usuarioPessoa.telefones}">
             <p:column headerText="ID">
                     <h:outputText value="#{telefone.id}"/>
             </p:column>

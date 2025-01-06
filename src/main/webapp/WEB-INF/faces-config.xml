@@ -6,7 +6,7 @@
 
 
     <navigation-rule>
-        <from-view-id>/index.xhtml</from-view-id>
+        <from-view-id>/pages/cadastros/usuarioCadastro.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>novo</from-outcome>
             <to-view-id>/pages/cadastros/telefoneCadastro.xhtml</to-view-id>

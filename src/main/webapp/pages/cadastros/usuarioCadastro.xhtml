@@ -31,11 +31,8 @@
             <p:outputLabel value="Idade"/>
             <p:inputText value="#{usuarioPessoaManagedBean.usuarioPessoa.idade}"/>
 
-            <p:outputLabel value="Login"/>
-            <p:inputText value="#{usuarioPessoaManagedBean.usuarioPessoa.login}"/>
-
-            <p:outputLabel value="Senha"/>
-            <p:password value="#{usuarioPessoaManagedBean.usuarioPessoa.password}" feedback="true"/>
+            <p:outputLabel value="Salário"/>
+            <p:inputText value="#{usuarioPessoaManagedBean.usuarioPessoa.salario}"/>
 
             <p:outputLabel for="@next" value="Sexo"/>
             <p:selectOneMenu id="option" value="#{usuarioPessoaManagedBean.usuarioPessoa.sexo}">
@@ -43,6 +40,30 @@
                 <f:selectItem itemLabel="Masculino" itemValue="M"/>
                 <f:selectItem itemLabel="Feminino" itemValue="F"/>
             </p:selectOneMenu>
+
+            <p:outputLabel value="CEP"/>
+            <p:inputText value="#{usuarioPessoaManagedBean.usuarioPessoa.cep}">
+                <f:ajax event="blur" execute="@this" render="logradouro bairro cidade estado" listener="#{usuarioPessoaManagedBean.pesquisaCep}"/>
+            </p:inputText>
+
+            <p:outputLabel value="Logradouro"/>
+            <p:inputText value="#{usuarioPessoaManagedBean.usuarioPessoa.logradouro}" id="logradouro"/>
+
+            <p:outputLabel value="Bairro"/>
+            <p:inputText value="#{usuarioPessoaManagedBean.usuarioPessoa.bairro}" id="bairro"/>
+
+            <p:outputLabel value="Cidade"/>
+            <p:inputText value="#{usuarioPessoaManagedBean.usuarioPessoa.localidade}" id="cidade"/>
+
+            <p:outputLabel value="Estado"/>
+            <p:inputText value="#{usuarioPessoaManagedBean.usuarioPessoa.estado}" id="estado"/>
+
+            <p:outputLabel value="Login"/>
+            <p:inputText value="#{usuarioPessoaManagedBean.usuarioPessoa.login}"/>
+
+            <p:outputLabel value="Senha"/>
+            <p:password value="#{usuarioPessoaManagedBean.usuarioPessoa.password}" feedback="true"/>
+
         </h:panelGrid>
                 <p:commandButton value="#{!usuarioPessoaManagedBean.modoEdicao?'Salvar':'Atualizar'}" action="#{usuarioPessoaManagedBean.salvar}" update="growl" ajax="false" styleClass="ui-button-success"/>
                 <p:commandButton value="Novo" action="#{usuarioPessoaManagedBean.novo}" ajax="false" styleClass="ui-button-secondary"/>
@@ -70,8 +91,8 @@
                 <p:commandButton styleClass="ui-button-secondary" icon="pi pi-phone" title="Cadastrar Telefone" action="#{usuarioPessoaManagedBean.cadastrarTelefone(usuario)}" ajax="false"/>
             </p:column>
         </p:dataTable>
-
-
     </h:form>
+
+    <p:chart type="bar" model="#{usuarioPessoaManagedBean.barChartModel}"/>
 </h:body>
 </html>
